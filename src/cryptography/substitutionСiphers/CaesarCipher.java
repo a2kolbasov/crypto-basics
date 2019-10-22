@@ -1,5 +1,7 @@
 package cryptography.substitutionСiphers;
 
+import cryptography.utils.Alphabets;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class CaesarCipher {
     }
     public CaesarCipher(int shift){
         // С русским алфавитом
-        this.alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
+        this.alphabet = Alphabets.RUSSIAN;
         this.shift = shift;
         this.buildShiftedAlphabet();
     }
@@ -50,4 +52,5 @@ public class CaesarCipher {
         }
         return String.valueOf(chars);
     }
+
 }
