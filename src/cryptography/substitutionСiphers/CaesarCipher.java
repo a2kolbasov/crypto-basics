@@ -21,12 +21,6 @@ public class CaesarCipher {
         this.shift = shift;
         this.buildShiftedAlphabet();
     }
-    public CaesarCipher(int shift){
-        // С русским алфавитом
-        this.alphabet = Alphabets.RUSSIAN;
-        this.shift = shift;
-        this.buildShiftedAlphabet();
-    }
 
     private void buildShiftedAlphabet(){
         shiftedAlphabet = new HashMap<>();
@@ -39,8 +33,8 @@ public class CaesarCipher {
 
     public String encrypt(String message){
         char[] chars = message.toCharArray();
-        //buildShiftedAlphabet(); // Если задавать сдвиг не в конструкторе
-        //System.out.println(shiftedAlphabet);
+        // Если задавать сдвиг не в конструкторе
+        //buildShiftedAlphabet();
 
         for (int i = 0; i < chars.length; i++){
             try {

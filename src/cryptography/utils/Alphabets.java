@@ -5,6 +5,7 @@ package cryptography.utils;
  */
 
 public class Alphabets {
-    public static char[] RUSSIAN = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
-    public static char[] ENGLISH = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    public final static char[]
+            RUSSIAN = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray(),
+            ENGLISH = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 }
