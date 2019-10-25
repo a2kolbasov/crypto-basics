@@ -23,14 +23,17 @@ public class CaesarCipher {
         shiftedAlphabet = new HashMap<>();
 
         for (int charPosition = 0; charPosition < alphabet.length; charPosition++){
-            int newCharPosition = (charPosition + shift) % alphabet.length;
+            int newCharPosition =
+                    (charPosition + shift +
+                            alphabet.length // Если сдвиг отрицательный
+                    ) % alphabet.length;
             shiftedAlphabet.put(alphabet[charPosition], alphabet[newCharPosition]);
         }
     }
 
-    public String encrypt(String message){
+    private String encrypt(int shift, String message){
         char[] charsFromMessage = message.toCharArray();
-        buildShiftedAlphabet(this.shift);
+        buildShiftedAlphabet(shift);
 
         for (int i = 0; i < charsFromMessage.length; i++){
             try {
@@ -45,4 +48,11 @@ public class CaesarCipher {
         return String.valueOf(charsFromMessage);
     }
 
+    public String encrypt(String message){
+        return encrypt(this.shift, message);
+    }
+
+    public String decrypt(String encryptedMessage){
+        return encrypt(this.shift * -1, encryptedMessage);
+    }
 }
