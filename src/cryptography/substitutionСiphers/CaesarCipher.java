@@ -1,7 +1,5 @@
 package cryptography.substitutionСiphers;
 
-import cryptography.utils.Alphabets;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,32 +17,32 @@ public class CaesarCipher {
     public CaesarCipher(int shift, char[] alphabet){
         this.alphabet = alphabet;
         this.shift = shift;
-        this.buildShiftedAlphabet();
     }
 
-    private void buildShiftedAlphabet(){
+    private void buildShiftedAlphabet(int shift){
         shiftedAlphabet = new HashMap<>();
 
-        for (int i = 0; i < alphabet.length; i++){
-            int charPosition = (i + shift) % alphabet.length;
-            shiftedAlphabet.put(alphabet[i], alphabet[charPosition]);
+        for (int charPosition = 0; charPosition < alphabet.length; charPosition++){
+            int newCharPosition = (charPosition + shift) % alphabet.length;
+            shiftedAlphabet.put(alphabet[charPosition], alphabet[newCharPosition]);
         }
     }
 
     public String encrypt(String message){
-        char[] chars = message.toCharArray();
-        // Если задавать сдвиг не в конструкторе
-        //buildShiftedAlphabet();
+        char[] charsFromMessage = message.toCharArray();
+        buildShiftedAlphabet(this.shift);
 
-        for (int i = 0; i < chars.length; i++){
+        for (int i = 0; i < charsFromMessage.length; i++){
             try {
-                chars[i] = shiftedAlphabet.get(Character.toLowerCase(chars[i]));
+                boolean isUpperCase = Character.isUpperCase(charsFromMessage[i]);
+                Character character = shiftedAlphabet.get(Character.toLowerCase(charsFromMessage[i]));
+                charsFromMessage[i] = isUpperCase ? Character.toUpperCase(character) : character;
             } catch (NullPointerException e){
                 // Если символа нет в алфавите
                 //System.err.printf("char %c hasn't in the alphabet", chars[i]);
             }
         }
-        return String.valueOf(chars);
+        return String.valueOf(charsFromMessage);
     }
 
 }
