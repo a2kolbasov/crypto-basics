@@ -25,14 +25,11 @@ public class FrequencyAnalysis {
 
         for (int position = 0; position < text.length() - gramSize + 1; position++){
             String gram = text.substring(position, position + gramSize);
+
             if (! containsInAlphabet(gram))
                 continue;
 
-            Integer sum = frequency.get(gram);
-
-            if (sum == null)
-                sum = 0;
-
+            Integer sum = frequency.getOrDefault(gram, 0);
             frequency.put(gram, sum + 1);
         }
         return frequency;
