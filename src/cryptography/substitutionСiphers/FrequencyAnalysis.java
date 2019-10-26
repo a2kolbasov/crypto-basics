@@ -1,6 +1,7 @@
 package cryptography.substitutionСiphers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /*
@@ -8,7 +9,14 @@ import java.util.Map;
  */
 
 public class FrequencyAnalysis {
-    public static Map getFrequencyTable(String text, int gramSize, String alphabet){
+    private final HashSet<Character> alphabet = new HashSet<>();
+
+    public FrequencyAnalysis(String alphabet){
+        for (Character character : alphabet.toCharArray())
+            this.alphabet.add(character);
+    }
+
+    public Map getFrequencyTable(int gramSize, String text){
         Map<String, Integer> frequency = new HashMap<>();
 
         if (gramSize < 1)
@@ -17,7 +25,7 @@ public class FrequencyAnalysis {
 
         for (int position = 0; position < text.length() - gramSize + 1; position++){
             String gram = text.substring(position, position + gramSize);
-            if (! containsInAlphabet(alphabet, gram))
+            if (! containsInAlphabet(gram))
                 continue;
 
             Integer sum = frequency.get(gram);
@@ -30,9 +38,9 @@ public class FrequencyAnalysis {
         return frequency;
     }
 
-    private static boolean containsInAlphabet(String alphabet, String gram){
-        for (char character : gram.toCharArray()){
-            if (alphabet.indexOf(character) == -1)
+    private boolean containsInAlphabet(String gram){
+        for (Character character : gram.toCharArray()){
+            if (! this.alphabet.contains(character))
                 return false;
         }
         return true;
