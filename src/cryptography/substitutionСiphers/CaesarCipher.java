@@ -1,51 +1,49 @@
+// TODO: заменить на английскую букву !!!
 package cryptography.substitutionСiphers;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
 
 public class CaesarCipher {
-    public final int shift;
-    public final char[] alphabet;
+    private final int shift;
+    private final String alphabet;
 
-    // <originalChar, shiftedChar>
-    private Map<Character, Character> shiftedAlphabet;
-
-    public CaesarCipher(int shift, char[] alphabet){
+    public CaesarCipher(int shift, String alphabet){
         this.alphabet = alphabet;
         this.shift = shift;
     }
 
-    private void buildShiftedAlphabet(int shift){
-        shiftedAlphabet = new HashMap<>();
+    private char getShiftedChar(char shiftingCharacter, int shift){
+        int charIndex = this.alphabet.indexOf(shiftingCharacter);
 
-        for (int charPosition = 0; charPosition < alphabet.length; charPosition++){
-            int newCharPosition =
-                    (charPosition + shift +
-                            alphabet.length // Если сдвиг отрицательный
-                    ) % alphabet.length;
-            shiftedAlphabet.put(alphabet[charPosition], alphabet[newCharPosition]);
-        }
+        // Если символа нет в алфавите, то не сдвигать
+        if (charIndex == -1)
+            return shiftingCharacter;
+
+        return this.alphabet.charAt(
+                (charIndex +
+                        shift +
+                        this.alphabet.length() // На случай отрицательного сдвига
+                ) % this.alphabet.length()
+        );
     }
 
     private String encrypt(int shift, String message){
-        char[] charsFromMessage = message.toCharArray();
-        buildShiftedAlphabet(shift);
+        final char[] encryptedMessage = new char[message.length()];
+        char character, shiftedCharacter;
 
-        for (int i = 0; i < charsFromMessage.length; i++){
-            try {
-                boolean isUpperCase = Character.isUpperCase(charsFromMessage[i]);
-                Character character = shiftedAlphabet.get(Character.toLowerCase(charsFromMessage[i]));
-                charsFromMessage[i] = isUpperCase ? Character.toUpperCase(character) : character;
-            } catch (NullPointerException e){
-                // Если символа нет в алфавите
-                //System.err.printf("char %c hasn't in the alphabet", chars[i]);
-            }
+        for (int charPosition = 0; charPosition < message.length(); charPosition++){
+            character = message.charAt(charPosition);
+            boolean isUpperCase = Character.isUpperCase(character);
+
+            shiftedCharacter = getShiftedChar(
+                    Character.toLowerCase(character), shift);
+
+            encryptedMessage[charPosition] =
+                    isUpperCase ? Character.toUpperCase(shiftedCharacter) : shiftedCharacter;
         }
-        return String.valueOf(charsFromMessage);
+        return String.valueOf(encryptedMessage);
     }
 
     public String encrypt(String message){
