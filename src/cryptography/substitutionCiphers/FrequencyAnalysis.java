@@ -16,7 +16,7 @@ public class FrequencyAnalysis {
             this.alphabet.add(character);
     }
 
-    public Map getFrequencyTable(int gramSize, String text){
+    public Map<String, Integer> toFrequencyMap(String text, int gramSize){
         Map<String, Integer> frequency = new HashMap<>();
 
         if (gramSize < 1)

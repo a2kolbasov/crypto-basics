@@ -8,21 +8,20 @@ public class CaesarCipher {
     private final int shift;
     private final String alphabet;
 
-    public CaesarCipher(int shift, String alphabet){
+    public CaesarCipher(String alphabet, int shift){
         this.alphabet = alphabet;
         this.shift = shift;
     }
 
-    private char getShiftedChar(char shiftingCharacter, int shift){
-        int charIndex = this.alphabet.indexOf(shiftingCharacter);
+    private char getShiftedChar(char shiftingChar, int shift){
+        int charIndex = this.alphabet.indexOf(shiftingChar);
 
         // Если символа нет в алфавите, то не сдвигать
         if (charIndex == -1)
-            return shiftingCharacter;
+            return shiftingChar;
 
         return this.alphabet.charAt(
-                (charIndex +
-                        shift +
+                (charIndex + shift +
                         this.alphabet.length() // На случай отрицательного сдвига
                 ) % this.alphabet.length()
         );
@@ -34,13 +33,13 @@ public class CaesarCipher {
 
         for (int charPosition = 0; charPosition < message.length(); charPosition++){
             character = message.charAt(charPosition);
-            boolean isUpperCase = Character.isUpperCase(character);
+            boolean isUpper = Character.isUpperCase(character);
 
             shiftedCharacter = getShiftedChar(
                     Character.toLowerCase(character), shift);
 
             encryptedMessage[charPosition] =
-                    isUpperCase ? Character.toUpperCase(shiftedCharacter) : shiftedCharacter;
+                    isUpper ? Character.toUpperCase(shiftedCharacter) : shiftedCharacter;
         }
         return String.valueOf(encryptedMessage);
     }
