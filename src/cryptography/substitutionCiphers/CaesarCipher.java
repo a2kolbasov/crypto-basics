@@ -1,5 +1,4 @@
-// TODO: заменить на английскую букву !!!
-package cryptography.substitutionСiphers;
+package cryptography.substitutionCiphers;
 
 /*
  * Copyright © 2019 Alexander Kolbasov

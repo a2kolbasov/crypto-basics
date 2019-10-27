@@ -1,4 +1,4 @@
-package cryptography.substitutionСiphers;
+package cryptography.substitutionCiphers;
 
 import java.util.HashMap;
 import java.util.HashSet;
