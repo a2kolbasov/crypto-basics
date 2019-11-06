@@ -11,53 +11,54 @@ import java.security.SecureRandom;
 
 public class DiffieHellman {
     public static class PG{
-        public final long p,g;
+        public BigInteger p,g;
 
-        public PG(long p, long g) {
+        public PG(BigInteger p, BigInteger g) {
             this.p = p;
             this.g = g;
         }
     }
 
     // TODO : BigInteger
-    private long p,g,a, A, K;
+    private BigInteger p,g,a, A, K;
 
-    public long initAndGet_a(PG pg){
-        //p = pg.p;
-        //g = pg.g;
-        p = 7; g = 2;
+    public BigInteger initAndGet_A(PG pg){
+        p = pg.p;
+        g = pg.g;
 
         a = gen_a();
         System.out.printf("p " + p + " g " + g + " a " + a);
 
-        // A = g^a % p
-        A = ((long) Math.pow(g, a)) % p;
+        // A = g^a mod p
+        A = g.modPow(a, p);
+        //A = ((long) Math.pow(g, a)) % p;
         System.out.println(" A = " + A);
         return A;
     }
 
-    public long calculateK(long B){
-        K = ((long) Math.pow(B, a));
+    public BigInteger calculateK(BigInteger B){
+        // K = B^a mod p
+        // K = ((long) Math.pow(B, a)) % p;
+        K = B.modPow(a, p);
         System.out.println("K = " + K);
-        K = K % p;
-        System.out.println("K = " + K);
-
         return K;
     }
 
     public PG genPG(){
-        // Временно // TODO : через PrimesGen
-        p = PrimesGenerator.getRandomPrime();
-        g = PrimesGenerator.getRandomPrime();
+        p = PrimesGenerator.getBigPrime();
+        // Временно
+        do {
+            g = PrimesGenerator.getBigPrime();
+        } while (g.compareTo(p) < 0);// while g < p //(g.max(p).equals(g));
         // TODO : Проверка, что g -- первообразный корень
         return new PG(p, g);
     }
 
-    boolean isPrimitiveRoot(BigInteger number, BigInteger modulo){
+    /*boolean isPrimitiveRoot(BigInteger number, BigInteger modulo){
         // TODO
         throw null;
-    }
-    long gen_a(){
-        return PrimesGenerator.getRandomPrime();
+    }*/
+    BigInteger gen_a(){
+        return PrimesGenerator.getBigPrime();
     }
 }

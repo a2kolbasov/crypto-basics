@@ -18,4 +18,13 @@ public class PrimesGenerator {
             randomLong +=1;
         } while (true);
     }
+
+
+    public static BigInteger getBigPrime(){
+        // TODO: регулировка длинны
+        BigInteger prime =
+                new BigInteger(20, new SecureRandom())
+                        .nextProbablePrime();
+        return prime;
+    }
 }
