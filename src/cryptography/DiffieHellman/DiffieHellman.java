@@ -20,7 +20,7 @@ public class DiffieHellman {
     }
 
     // TODO : BigInteger
-    private BigInteger p,g,a, A, K;
+    private BigInteger p,g, a, A, K;
 
     public BigInteger initAndGet_A(PG pg){
         p = pg.p;
@@ -44,7 +44,8 @@ public class DiffieHellman {
         return K;
     }
 
-    public PG genPG(){
+    public static PG genPG(){
+        BigInteger p,g;
         p = PrimesGenerator.getBigPrime();
         // Временно
         do {

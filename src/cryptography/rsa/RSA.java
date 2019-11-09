@@ -13,13 +13,44 @@ RSA для встраиваемых систем (про длинную ариф
 */
 
 public class RSA {
-    void genKey(DiffieHellman.PG pg){
+    Key genKey(DiffieHellman.PG pg){
         BigInteger n = pg.p.multiply(pg.g);
         BigInteger fi =
                 pg.p.subtract(BigInteger.ONE)
                 .multiply(
                         pg.g.subtract(BigInteger.ONE)
                 );
+        BigInteger e = BigInteger.valueOf(17);
 
+        BigInteger d =
+                BigInteger.ONE.divide(e).mod(fi);
+        //e.pow(-1).mod(fi); // Negative exponent
+        System.out.println("d: " + d);
+
+        return new Key(e, n, d);
+    }
+
+    BigInteger encrypt(String message, Key key){
+        BigInteger[] arr = new BigInteger[message.length()];
+        BigInteger bi = new BigInteger(message.getBytes());
+        System.out.println(bi);
+        BigInteger encrypted = bi.modPow(key.d, key.n);
+        return encrypted;
+        //return null;
+    }
+
+    String decrypt(BigInteger encrypted, Key key){
+        BigInteger decrypted = encrypted.modPow(key.d, key.n);
+        return new String(decrypted.toByteArray());
+    }
+
+    public static class Key{
+        public BigInteger e, n, d;
+
+        public Key(BigInteger e, BigInteger n, BigInteger d) {
+            this.e = e;
+            this.n = n;
+            this.d = d;
+        }
     }
 }
