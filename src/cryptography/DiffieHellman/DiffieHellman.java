@@ -27,12 +27,12 @@ public class DiffieHellman {
         g = pg.g;
 
         a = gen_a();
-        System.out.printf("p " + p + " g " + g + " a " + a);
+        System.out.printf("p: %s, g: %s, a: %s\n", p, g, a);
 
         // A = g^a mod p
         A = g.modPow(a, p);
         //A = ((long) Math.pow(g, a)) % p;
-        System.out.println(" A = " + A);
+        //System.out.println(" A = " + A);
         return A;
     }
 
@@ -40,7 +40,7 @@ public class DiffieHellman {
         // K = B^a mod p
         // K = ((long) Math.pow(B, a)) % p;
         K = B.modPow(a, p);
-        System.out.println("K = " + K);
+        //System.out.println("K = " + K);
         return K;
     }
 

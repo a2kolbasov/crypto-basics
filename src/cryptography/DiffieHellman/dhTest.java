@@ -15,6 +15,6 @@ public class dhTest {
         K1 = dh1.calculateK(B);
         K2 = dh2.calculateK(A);
 
-        System.out.printf("A:%s, B:%s\nK1:%s\nK2:%s\n\nK is correct - %s", A,B,K1,K2,K1.compareTo(K2) == 0);
+        System.out.printf("A:%s, B:%s\nK1:%s\nK2:%s\nK is correct - %s", A,B,K1,K2,K1.compareTo(K2) == 0);
     }
 }

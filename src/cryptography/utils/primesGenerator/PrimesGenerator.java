@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class PrimesGenerator {
+    //private static SecureRandom secureRandom = new SecureRandom();
     public static long getRandomPrime(){
         SecureRandom secureRandom = new SecureRandom();
         long randomLong = secureRandom.nextLong();
@@ -23,7 +24,7 @@ public class PrimesGenerator {
     public static BigInteger getBigPrime(){
         // TODO: регулировка длинны
         BigInteger prime =
-                new BigInteger(20, new SecureRandom())
+                new BigInteger(50, new SecureRandom())
                         .nextProbablePrime();
         return prime;
     }
