@@ -21,7 +21,7 @@ public class RSA {
                         pg.g.subtract(BigInteger.ONE)
                 );
         BigInteger e = BigInteger.valueOf(17);
-
+        // TODO : поиск d
         BigInteger d =
                 BigInteger.ONE.divide(e).mod(fi);
         //e.pow(-1).mod(fi); // Negative exponent
