@@ -20,7 +20,7 @@ public class RSA {
                 .multiply(
                         pg.g.subtract(BigInteger.ONE)
                 );
-        BigInteger e = BigInteger.valueOf(17);
+        BigInteger e = BigInteger.valueOf(65537);
         // TODO : поиск d
         BigInteger d =
                 BigInteger.ONE.divide(e).mod(fi);
