@@ -5,61 +5,71 @@ package cryptography.DiffieHellman;
  */
 
 import cryptography.utils.primesGenerator.PrimesGenerator;
+import jdk.jfr.Experimental;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class DiffieHellman {
-    public static class PG{
-        public BigInteger p,g;
+    private BigInteger a, A, K;
+    private final BigInteger p, g;
 
+    public static class PG{
+        public BigInteger p, g;
         public PG(BigInteger p, BigInteger g) {
             this.p = p;
             this.g = g;
         }
     }
 
-    // TODO : BigInteger
-    private BigInteger p,g, a, A, K;
-
-    public BigInteger initAndGet_A(PG pg){
-        p = pg.p;
-        g = pg.g;
-
-        a = gen_a();
-        System.out.printf("p: %s, g: %s, a: %s\n", p, g, a);
-
-        // A = g^a mod p
-        A = g.modPow(a, p);
-        //A = ((long) Math.pow(g, a)) % p;
-        //System.out.println(" A = " + A);
-        return A;
-    }
-
-    public BigInteger calculateK(BigInteger B){
-        // K = B^a mod p
-        // K = ((long) Math.pow(B, a)) % p;
-        K = B.modPow(a, p);
-        //System.out.println("K = " + K);
-        return K;
-    }
-
     public static PG genPG(){
-        BigInteger p,g;
+        BigInteger p, g;
+        // TODO : (p-1)/2 должно быть случайным простым числом
         p = PrimesGenerator.getBigPrime();
         // Временно
+        // TODO : Проверка, что g -- первообразный корень
         do {
             g = PrimesGenerator.getBigPrime();
-        } while (g.compareTo(p) < 0);// while g < p //(g.max(p).equals(g));
-        // TODO : Проверка, что g -- первообразный корень
+        } while (p.compareTo(g) <= 0); // while p <= g
         return new PG(p, g);
     }
 
-    /*boolean isPrimitiveRoot(BigInteger number, BigInteger modulo){
-        // TODO
-        throw null;
-    }*/
-    BigInteger gen_a(){
+    public DiffieHellman(BigInteger p, BigInteger g) {
+        this.p = p;
+        this.g = g;
+    }
+    public DiffieHellman(PG pg){
+        this.p = pg.p;
+        this.g = pg.g;
+    }
+    public BigInteger calculate_A(){
+        // TODO : в конструктор или двойное вычисление
+        a = gen_a();
+        // A = g^a mod p
+        A = g.modPow(a, p);
+        return A;
+    }
+
+    public BigInteger calculate_K(BigInteger B){
+        if (K != null)
+            return K;
+        // K = B^a mod p
+        K = B.modPow(a, p);
+        return K;
+    }
+
+//    boolean isPrimitiveRoot(BigInteger number, BigInteger modulo){
+//        // TODO
+//        throw new RuntimeException();
+//    }
+
+    private BigInteger gen_a(){
+        // TODO : случайное натуральное число
         return PrimesGenerator.getBigPrime();
+    }
+
+    @Override
+    public String toString(){
+        return String.format("p: %s, g: %s, A: %s, K: %s", p, g, A, K);
     }
 }

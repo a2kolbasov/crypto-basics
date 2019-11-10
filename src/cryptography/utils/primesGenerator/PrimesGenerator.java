@@ -22,7 +22,7 @@ public class PrimesGenerator {
 
 
     public static BigInteger getBigPrime(){
-        // TODO: регулировка длинны
+        // TODO: регулировка длинны (младший и старший биты)
         BigInteger prime =
                 new BigInteger(50, new SecureRandom())
                         .nextProbablePrime();
