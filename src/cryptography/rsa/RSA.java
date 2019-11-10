@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 /*
 <https://habr.com/ru/post/119637/>
-<https://habr.com/ru/company/virgilsecurity/blog/459370/>
+"Хватит использовать RSA" <https://habr.com/ru/company/virgilsecurity/blog/459370/>
 RSA для встраиваемых систем (про длинную арифметику) <https://habr.com/ru/post/243425/>
 Уязвимости простой реализации <https://habr.com/ru/post/99376/>
 <https://habr.com/ru/post/61400/>
