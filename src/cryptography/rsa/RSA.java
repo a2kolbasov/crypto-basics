@@ -1,6 +1,7 @@
 package cryptography.rsa;
 
 import cryptography.DiffieHellman.DiffieHellman;
+import jdk.jfr.Enabled;
 
 import java.math.BigInteger;
 
@@ -22,8 +23,8 @@ public class RSA {
                 .multiply(
                         pg.g.subtract(BigInteger.ONE));
 
-        // public exponent
-        BigInteger e = BigInteger.valueOf(65537);
+        // public exponent. 1 < e < fi && coprime with fi
+        BigInteger e = BigInteger.valueOf(65537); // TODO : а если не взаимопростое ?
         assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nнод (== 1): %s",e,fi,НОД(e,fi));
 
         // TODO : свой алгоритм поиска d
@@ -48,11 +49,16 @@ public class RSA {
 
     BigInteger encrypt(String message, Key key){
         BigInteger[] arr = new BigInteger[message.length()];
-        BigInteger bi = new BigInteger(message.getBytes());
-        System.out.println("bi: " + bi);
-        BigInteger encrypted = bi.modPow(key.e, key.n);
-        return encrypted;
-        //return null;
+
+        for (Character ch : message.toCharArray()){
+            // TODO
+        }
+        throw new RuntimeException("Нужно доделать!");
+
+//        BigInteger bi = new BigInteger(message.getBytes());
+//        System.out.println("bi: " + bi);
+//        BigInteger encrypted = bi.modPow(key.e, key.n);
+//        return encrypted;
     }
 
     String decrypt(BigInteger encrypted, Key key){
