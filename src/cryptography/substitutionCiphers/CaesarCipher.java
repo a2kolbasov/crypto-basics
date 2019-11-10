@@ -21,9 +21,7 @@ public class CaesarCipher {
             return shiftingChar;
 
         return this.alphabet.charAt(
-                (charIndex + shift +
-                        this.alphabet.length() // На случай отрицательного сдвига
-                ) % this.alphabet.length()
+                (charIndex + shift) % this.alphabet.length()
         );
     }
 
