@@ -8,16 +8,19 @@ class RSATest {
     public static void main(String[] args) {
         RSA rsa = new RSA();
         String message = "привет";
-        RSA.Key key = rsa.genKey(DiffieHellman.genPG());
-
-        BigInteger encrypted = rsa.encrypt(message, key);
-
-        System.out.println(
-                encrypted
-        );
-
-        System.out.println(
-                rsa.decrypt(encrypted, key)
-        );
+        while (true) {
+            RSA.Key key = rsa.genKey(DiffieHellman.genPG());
+        }
+//        BigInteger encrypted = rsa.encrypt(message, key);
+//
+//        System.out.println(
+//                "encrypted: " +
+//                encrypted
+//        );
+//
+//        System.out.println(
+//                "decrypted: " +
+//                rsa.decrypt(encrypted, key)
+//        );
     }
 }
