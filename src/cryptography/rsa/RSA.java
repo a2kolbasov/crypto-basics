@@ -4,6 +4,7 @@ import cryptography.DiffieHellman.DiffieHellman;
 import jdk.jfr.Enabled;
 
 import java.math.BigInteger;
+import java.util.Base64;
 
 /*
 <https://habr.com/ru/post/119637/>
@@ -47,23 +48,31 @@ public class RSA {
         return НОД(b, mod);
     }
 
-    static BigInteger encrypt(String message, Key key){
-        BigInteger[] arr = new BigInteger[message.length()];
+    String encrypt(String message, Key key){
+        StringBuilder encrypted = new StringBuilder();
+        for (char c : message.toCharArray()){
+            BigInteger cNum = BigInteger.valueOf(c);
+            encrypted.append(
+                    cNum.modPow(key.e, key.n)
+                            .toString(16)
+            );
 
-        for (Character ch : message.toCharArray()){
-            // TODO
+            encrypted.append(" ");
         }
-        throw new RuntimeException("Нужно доделать!");
-
-//        BigInteger bi = new BigInteger(message.getBytes());
-//        System.out.println("bi: " + bi);
-//        BigInteger encrypted = bi.modPow(key.e, key.n);
-//        return encrypted;
+        return encrypted.toString();
     }
 
-    static String decrypt(BigInteger encrypted, Key key){
-        BigInteger decrypted = encrypted.modPow(key.d, key.n);
-        return new String(decrypted.toByteArray());
+    static String decrypt(String encryptedMessage, Key key){
+        String[] messages = encryptedMessage.split(" ");
+        StringBuilder decrypted = new StringBuilder();
+        for (String message : messages){
+            decrypted.append((char)
+                    new BigInteger(message, 16)
+                            .modPow(key.d, key.n)
+                            .intValueExact()
+            );
+        }
+        return decrypted.toString();
     }
 
     public static class Key{
