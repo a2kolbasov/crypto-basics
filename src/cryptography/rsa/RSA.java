@@ -14,7 +14,7 @@ RSA для встраиваемых систем (про длинную ариф
 */
 
 public class RSA {
-    Key genKey(DiffieHellman.PG pg){
+    static Key genKey(DiffieHellman.PG pg){
         // n = p * q
         BigInteger n = pg.p.multiply(pg.g);
         // fi = (p - 1) * (q - 1)
@@ -47,7 +47,7 @@ public class RSA {
         return НОД(b, mod);
     }
 
-    BigInteger encrypt(String message, Key key){
+    static BigInteger encrypt(String message, Key key){
         BigInteger[] arr = new BigInteger[message.length()];
 
         for (Character ch : message.toCharArray()){
@@ -61,7 +61,7 @@ public class RSA {
 //        return encrypted;
     }
 
-    String decrypt(BigInteger encrypted, Key key){
+    static String decrypt(BigInteger encrypted, Key key){
         BigInteger decrypted = encrypted.modPow(key.d, key.n);
         return new String(decrypted.toByteArray());
     }
