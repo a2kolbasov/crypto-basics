@@ -23,20 +23,20 @@ public class mathTest {
             b = BigInteger.valueOf(c);
             BigInteger encrypted = b.modPow(key.e, key.n);
             BigInteger decrypted = encrypted.modPow(key.d, key.n);
-            System.out.printf("char: %c (%d), en: %s, d: %s\n", c, (int) c, encrypted, decrypted);
+            System.out.printf("char: %c (%d), encrypted: %s, decrypted: %s\n", c, (int) c, encrypted, decrypted);
             sb.append(encrypted.toString(16));
             sb.append(' ');
         }
-        System.out.println(sb);
+        System.out.println("sb :" + sb);
 
         String[] sa = sb.toString().split(" ");
         sb = new StringBuilder();
         for (String s :sa){
-            System.out.println(s);
+            System.out.println("next string :" + s);
             BigInteger decrypted = new BigInteger(s, 16);
-            System.out.println(decrypted);
+            System.out.println("encrypted: " + decrypted);
             decrypted = decrypted.modPow(key.d, key.n);
-            System.out.println(decrypted);
+            System.out.println("decrypted: " + decrypted);
             sb.append(
                     (char) decrypted.intValueExact()
             );
