@@ -1,10 +1,13 @@
 package cryptography.rsa;
 
 import cryptography.DiffieHellman.DiffieHellman;
-import jdk.jfr.Enabled;
 
 import java.math.BigInteger;
 import java.util.Base64;
+
+/*
+ * Copyright © 2019 Alexander Kolbasov
+ */
 
 /*
 <https://habr.com/ru/post/119637/>
@@ -49,27 +52,28 @@ public class RSA {
     }
 
     String encrypt(String message, Key key){
+        Base64.Encoder encoder = Base64.getMimeEncoder();
         StringBuilder encrypted = new StringBuilder();
+
         for (char c : message.toCharArray()){
             BigInteger cNum = BigInteger.valueOf(c);
             encrypted.append(
-                    cNum.modPow(key.e, key.n)
-                            .toString(16)
-            );
-
-            encrypted.append(" ");
+                    encoder.encodeToString(
+                            cNum.modPow(key.e, key.n)
+                                    .toByteArray()));
+            encrypted.append("\n");
         }
         return encrypted.toString();
     }
 
     static String decrypt(String encryptedMessage, Key key){
-        String[] messages = encryptedMessage.split(" ");
+        Base64.Decoder decoder = Base64.getMimeDecoder();
         StringBuilder decrypted = new StringBuilder();
+
+        String[] messages = encryptedMessage.split("\n");
         for (String message : messages){
             decrypted.append((char)
-                    new BigInteger(message, 16)
-                            .modPow(key.d, key.n)
-                            .intValueExact()
+                    new BigInteger(decoder.decode(message)).modPow(key.d, key.n).intValue()
             );
         }
         return decrypted.toString();
