@@ -1,5 +1,9 @@
 package cryptography.DiffieHellman;
 
+/*
+ * Copyright © 2019 Alexander Kolbasov
+ */
+
 import java.math.BigInteger;
 
 public class dhTest {

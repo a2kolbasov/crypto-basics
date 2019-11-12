@@ -1,5 +1,9 @@
 package cryptography.substitutionCiphers;
 
+/*
+ * Copyright © 2019 Alexander Kolbasov
+ */
+
 import cryptography.substitutionCiphers.CaesarCipher;
 import cryptography.substitutionCiphers.FrequencyAnalysis;
 import cryptography.utils.Alphabets;
