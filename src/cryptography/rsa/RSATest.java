@@ -10,7 +10,7 @@ public class RSATest {
     public static void main(String[] args) {
         RSA rsa = new RSA();
 
-        String message = "Привет, как дела? ☑\n🔐";
+        String message = "Привет, как дела? ☑\n\uD83D\uDD10Нормально!";
 //        while (true) {
 //            RSA.Key key = rsa.genKey(DiffieHellman.genPG());
 //        }

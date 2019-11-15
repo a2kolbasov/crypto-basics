@@ -24,7 +24,7 @@ public class RSA {
         // fi = (p - 1) * (q - 1)
         BigInteger fi =
                 pg.p.subtract(BigInteger.ONE)
-                .multiply(
+                    .multiply(
                         pg.g.subtract(BigInteger.ONE));
 
         // public exponent. 1 < e < fi && coprime with fi
