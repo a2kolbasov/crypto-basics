@@ -5,7 +5,7 @@ package cryptography.srp6;
  */
 
 public class Hash {
-    byte[] hash(byte[]... bytes){
+    static byte[] hash(byte[]... bytes){
         // TODO
         throw new RuntimeException();
     }
