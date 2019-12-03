@@ -49,7 +49,7 @@ public class Server {
 
     public void gen_u() throws IllegalAccessException {
         // u = H(A, B)
-        u = Hash.hash(A, B);
+        u = Hash.hash(A.toByteArray(), B.toByteArray());
         // u != 0
         if (u.equals(BigInteger.ZERO))
             throw new IllegalAccessException("u == 0");
@@ -69,15 +69,23 @@ public class Server {
         // S = (A*(v^u mod N))^b mod N
         BigInteger S = A.multiply(v.modPow(u, N)).modPow(b, N);
         // K = H(S)
-        K = Hash.hash(S);
+        K = Hash.hash(S.toByteArray());
     }
 
     public BigInteger test_M(BigInteger M_C) {
         // M = H(H(N) xor H(g), H(I), s, A, B, K)
-        BigInteger M_S = Hash.hash(Hash.hash(N).xor(Hash.hash(g)), Hash.hash(I), s, A, B, K);
+        BigInteger M_S = Hash.hash(
+                Hash.hash(N.toByteArray())
+                        .xor(Hash.hash(g.toByteArray())).toByteArray(),
+                Hash.hash(I.getBytes()).toByteArray(),
+                s.getBytes(),
+                A.toByteArray(),
+                B.toByteArray(),
+                K.toByteArray()
+        );
         // R = H(A, M, K)
         if (M_S.equals(M_C))
-            return Hash.hash(A, M_S, K);
+            return Hash.hash(A.toByteArray(), M_S.toByteArray(), K.toByteArray());
         else
             return BigInteger.ZERO;
     }

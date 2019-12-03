@@ -1,7 +1,8 @@
 package srp6;
 
+import com.sun.tools.javac.Main;
+
 import java.math.BigInteger;
-import java.util.Scanner;
 
 public class TestSRP {
     // N generated using "openssl dhparam -text 1024 -2",
@@ -17,29 +18,21 @@ public class TestSRP {
             "6c:e2:90:14:41:66:8b:61:5b";
     private BigInteger N = new BigInteger(N_hex.replace(":", ""), 16);
     private BigInteger g = BigInteger.TWO;
+    
+
+
     private BigInteger k = BigInteger.valueOf(3);
     private Server server = new Server(N, g, k);
-    private Scanner in;
-    private String qq;
-
-    public TestSRP(Scanner in) {
-        this.in = in;
-    }
 
     public static void main(String[] args) {
-        TestSRP main = new TestSRP(new Scanner(System.in));
-        main.signUp();
-        main.signIn();
+        String user = "my login", password = "qwerty";
+        TestSRP test = new TestSRP();
+        test.signUp(user, password);
+        test.signIn(user, password);
     }
 
-
-
-    private void signUp() {
-        System.out.println("Enter login: ");
-        String login = in.next();
-
-        System.out.println("Enter password: ");
-        String password = in.next();
+    private void signUp(String login, String password) {
+        System.out.println("Sign Up");
 
         Client client = new Client(N, g, k, login, password);
 
@@ -53,13 +46,7 @@ public class TestSRP {
         }
     }
 
-    private void signIn() {
-        System.out.println("Enter login: ");
-        String login = in.next();
-
-        System.out.println("Enter password: ");
-        String password = in.next();
-
+    private void signIn(String login, String password) {
         Client client = new Client(N, g, k, login, password);
 
         BigInteger A = client.gen_A();
