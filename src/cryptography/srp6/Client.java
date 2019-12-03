@@ -2,6 +2,7 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
+/*
 package cryptography.srp6;
 
 import java.math.BigInteger;
@@ -29,6 +30,8 @@ public class Client {
 
 
     UserData signUp(String I, String password){
+        // todo
+        throw new RuntimeException();
         s = new byte[20];
         secureRandom.nextBytes(s);
 
@@ -52,6 +55,8 @@ public class Client {
     }
 
     SignIn1 signIn1(){
+        // todo
+        throw new RuntimeException();
         SignIn1 signIn1 = new SignIn1();
         signIn1.I = this.userData.I;
         BigInteger a = BigInteger.valueOf(secureRandom.nextLong());
@@ -75,3 +80,4 @@ public class Client {
         BigInteger A; // identifies self
     }
 }
+*/
