@@ -1,8 +1,8 @@
-package cryptography.utils.primesGenerator;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+package cryptography.utils.primesGenerator;
 
 import java.math.BigInteger;
 

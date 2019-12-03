@@ -8,8 +8,6 @@ import cryptography.utils.Alphabets;
 import cryptography.utils.FileReader;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class ccTest {
     public static void main(String[] args) throws IOException {

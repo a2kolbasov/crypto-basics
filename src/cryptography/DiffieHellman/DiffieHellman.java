@@ -1,8 +1,8 @@
-package cryptography.DiffieHellman;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+package cryptography.DiffieHellman;
 
 import cryptography.utils.primesGenerator.PrimesGenerator;
 import jdk.jfr.Experimental;

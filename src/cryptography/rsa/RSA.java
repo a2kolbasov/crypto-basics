@@ -1,13 +1,13 @@
+/*
+ * Copyright © 2019 Alexander Kolbasov
+ */
+
 package cryptography.rsa;
 
 import cryptography.DiffieHellman.DiffieHellman;
 
 import java.math.BigInteger;
 import java.util.Base64;
-
-/*
- * Copyright © 2019 Alexander Kolbasov
- */
 
 /*
 <https://habr.com/ru/post/119637/>
@@ -29,9 +29,9 @@ public class RSA {
 
         // public exponent. 1 < e < fi && coprime with fi
         BigInteger e = BigInteger.valueOf(65537); // TODO : а если не взаимопростое ?
-        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nнод (== 1): %s",e,fi,НОД(e,fi));
+//        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nнод (== 1): %s",e,fi,НОД(e,fi));
 
-        // TODO : свой алгоритм поиска d
+        // TODO : алгоритм поиска d
         // d * e (mod fi) == 1  <==>  d мультипликативно обратно e (mod fi)
         BigInteger d = e.modInverse(fi);
         assert d.multiply(e).mod(fi).compareTo(BigInteger.ONE) == 0;
@@ -39,19 +39,19 @@ public class RSA {
         return new Key(e, n, d);
     }
 
-    static BigInteger НОД(BigInteger a, BigInteger b) {
-        // A > B needed
-        if (a.compareTo(b) < 0)
-            return НОД(b, a);
+//    static BigInteger НОД(BigInteger a, BigInteger b) {
+//        // A > B needed
+//        if (a.compareTo(b) < 0)
+//            return НОД(b, a);
+//
+//        //System.out.printf("A: %s, B: %s\n", a, b);
+//        if (b.compareTo(BigInteger.ZERO) == 0)
+//            return a;
+//        BigInteger mod = a.mod(b);
+//        return НОД(b, mod);
+//    }
 
-        //System.out.printf("A: %s, B: %s\n", a, b);
-        if (b.compareTo(BigInteger.ZERO) == 0)
-            return a;
-        BigInteger mod = a.mod(b);
-        return НОД(b, mod);
-    }
-
-    String encrypt(String message, Key key){
+    static String encrypt(String message, Key key){
         Base64.Encoder encoder = Base64.getMimeEncoder();
         StringBuilder encrypted = new StringBuilder();
 

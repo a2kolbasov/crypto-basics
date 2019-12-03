@@ -1,13 +1,11 @@
-package cryptography.srp6;
-
-import javax.crypto.SecretKey;
-import javax.crypto.Cipher;
-import java.math.BigInteger;
-import java.security.KeyStore;
-import java.security.SecureRandom;
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+package cryptography.srp6;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 public class Client {
     SecureRandom secureRandom = new SecureRandom();
@@ -45,7 +43,7 @@ public class Client {
             safePrime = safePrime.nextProbablePrime();
         } while (true);
 ///
-        g = 
+        g =
         x = Hash.hash(s, password.getBytes());
 
         BigInteger v = new BigInteger(x).modPow(new BigInteger(x), N);
