@@ -21,6 +21,5 @@ public class dhTest {
         K2 = dhB.calculate_K(A);
 
         System.out.printf("dhA: %s\ndhB: %s\nK1 == K2: %b", dhA, dhB, K1.compareTo(K2) == 0);
-        //System.out.printf("A:%s, B:%s\nK1:%s\nK2:%s\nK is correct - %s", A,B,K1,K2,K1.compareTo(K2) == 0);
     }
 }

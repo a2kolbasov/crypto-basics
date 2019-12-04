@@ -33,10 +33,8 @@ public class PrimesGenerator {
 
     public static BigInteger getBigPrime(){
         // TODO: регулировка длинны (младший и старший биты)
-        BigInteger prime =
-                new BigInteger(10, new SecureRandom()) // 50
-                        .nextProbablePrime();
-        return prime;
+        return new BigInteger(10, new SecureRandom()) // 50
+                .nextProbablePrime();
     }
 
     public static BigInteger getSafePrime() {
@@ -57,11 +55,11 @@ public class PrimesGenerator {
         return root;
     }
 
-    private static boolean isPrimitiveRoot(final BigInteger value, final BigInteger mod) {
+    private static boolean isPrimitiveRoot(final BigInteger number, final BigInteger modulo) {
         HashSet<BigInteger> set = new HashSet<>();
-        // while (pow < mod)
-        for (BigInteger pow = BigInteger.ONE; pow.compareTo(mod) < 0; pow = pow.add(BigInteger.ONE)) {
-            BigInteger remainder = value.modPow(pow, mod);
+        // while (pow < modulo)
+        for (BigInteger pow = BigInteger.ONE; pow.compareTo(modulo) < 0; pow = pow.add(BigInteger.ONE)) {
+            BigInteger remainder = number.modPow(pow, modulo);
             if (set.contains(remainder))
                 return false;
             set.add(remainder);
