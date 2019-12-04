@@ -1,25 +1,12 @@
 package srp6;
 
-import com.sun.tools.javac.Main;
+import cryptography.utils.primesGenerator.PrimesGenerator;
 
 import java.math.BigInteger;
 
 public class TestSRP {
-    // N generated using "openssl dhparam -text 1024 -2",
-    // where g equals 2
-    private String N_hex = "00:f5:0a:08:ad:ff:22:47:58:12:37:db:d3:e8:fc:" +
-            "84:4a:f9:50:fb:7c:34:fc:c1:73:29:fa:15:e1:ee:" +
-            "15:ae:a9:3f:bb:23:bb:d3:88:22:cc:44:cb:a3:28:" +
-            "dc:db:19:b2:fa:b3:72:f9:f9:8a:05:f7:16:4a:39:" +
-            "90:19:d4:ee:ae:cd:c7:38:ee:19:22:61:0f:00:91:" +
-            "6b:0c:23:18:e5:05:fb:7d:34:4d:fe:22:7e:92:59:" +
-            "3d:6f:c1:91:d0:1f:37:b8:41:65:2f:76:54:8f:ab:" +
-            "e0:19:93:b3:a6:13:c8:c3:50:2a:5d:13:52:61:8c:" +
-            "6c:e2:90:14:41:66:8b:61:5b";
-    private BigInteger N = new BigInteger(N_hex.replace(":", ""), 16);
-    private BigInteger g = BigInteger.TWO;
-    
-
+    private BigInteger N = PrimesGenerator.getSafePrime();
+    private BigInteger g = PrimesGenerator.getFirstPrimitiveRoot(N);
 
     private BigInteger k = BigInteger.valueOf(3);
     private Server server = new Server(N, g, k);

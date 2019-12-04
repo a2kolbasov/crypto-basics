@@ -6,6 +6,13 @@ package cryptography.utils.primesGenerator;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashSet;
+/*
+Уязвимость в заранее заданных числах <https://habr.com/ru/post/312634/>
+<https://habr.com/ru/post/356870/>
+<https://habr.com/ru/post/100950/>
+<https://habr.com/ru/post/412779/>
+ */
 
 public class PrimesGenerator {
     //private static SecureRandom secureRandom = new SecureRandom();
@@ -27,8 +34,38 @@ public class PrimesGenerator {
     public static BigInteger getBigPrime(){
         // TODO: регулировка длинны (младший и старший биты)
         BigInteger prime =
-                new BigInteger(50, new SecureRandom())
+                new BigInteger(10, new SecureRandom()) // 50
                         .nextProbablePrime();
         return prime;
+    }
+
+    public static BigInteger getSafePrime() {
+        BigInteger prime = getBigPrime(), safePrime;
+        do {
+            safePrime = prime.multiply(BigInteger.TWO).add(BigInteger.ONE);
+            if (safePrime.isProbablePrime(5))
+                return safePrime;
+            else
+                prime = prime.nextProbablePrime();
+        } while (true);
+    }
+
+    public static BigInteger getFirstPrimitiveRoot(final BigInteger mod) {
+        BigInteger root = BigInteger.TWO;
+        while (! isPrimitiveRoot(root, mod))
+            root = root.add(BigInteger.ONE);
+        return root;
+    }
+
+    private static boolean isPrimitiveRoot(final BigInteger value, final BigInteger mod) {
+        HashSet<BigInteger> set = new HashSet<>();
+        // while (pow < mod)
+        for (BigInteger pow = BigInteger.ONE; pow.compareTo(mod) < 0; pow = pow.add(BigInteger.ONE)) {
+            BigInteger remainder = value.modPow(pow, mod);
+            if (set.contains(remainder))
+                return false;
+            set.add(remainder);
+        }
+        return true;
     }
 }
