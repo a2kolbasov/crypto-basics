@@ -6,11 +6,11 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class Client {
-    private BigInteger N;   // big prime number, modulus
+    private BigInteger N;   // (prime) modulus
     private BigInteger g;   // generator
     private BigInteger k;   // parameter
     private BigInteger x;   // client's private key
-    private BigInteger v;   // verifier
+    private BigInteger v;   // password verifier
     private BigInteger a;   // client's secret value
     private BigInteger A;   // client's public key
     private BigInteger B;   // server's public key
