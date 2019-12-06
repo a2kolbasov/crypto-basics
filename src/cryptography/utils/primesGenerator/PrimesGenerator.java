@@ -9,6 +9,9 @@ import java.security.SecureRandom;
 import java.util.HashSet;
 /*
 Уязвимость в заранее заданных числах <https://habr.com/ru/post/312634/>
+<https://habr.com/ru/post/356870/>
+<https://habr.com/ru/post/100950/>
+<https://habr.com/ru/post/412779/>
  */
 
 public class PrimesGenerator {
