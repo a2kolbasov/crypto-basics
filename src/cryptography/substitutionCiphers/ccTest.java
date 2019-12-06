@@ -14,7 +14,7 @@ public class ccTest {
         /*
          * Проверка работы шифра Цезаря
          */
-        String message = FileReader.readAll("глава.txt");
+        String message = FileReader.read("глава.txt");
         CaesarCipher cc = new CaesarCipher(Alphabets.RUSSIAN, 3);
 
         String encryptedMessage = cc.encrypt(message);
@@ -29,7 +29,7 @@ public class ccTest {
         /*
          * Частотный анализ
          */
-        String referenceText = FileReader.readAll("война_и_мир.txt");
+        String referenceText = FileReader.read("война_и_мир.txt");
         System.out.println(
                 analysis.decryptText(encryptedMessage, referenceText, 1)
         );
