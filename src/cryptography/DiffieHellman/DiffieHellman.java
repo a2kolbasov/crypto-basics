@@ -22,12 +22,8 @@ public class DiffieHellman {
 
     public static PG genPG(){
         BigInteger p, g;
-        // TODO : (p-1)/2 должно быть случайным простым числом (Safe prime)
-        p = PrimesGenerator.getBigPrime();
-        // TODO : Проверка, что g -- первообразный корень
-        do {
-            g = PrimesGenerator.getBigPrime();
-        } while (p.compareTo(g) <= 0); // while p <= g
+        p = PrimesGenerator.getSafePrime();
+        g = PrimesGenerator.getFirstPrimitiveRoot(p);
         return new PG(p, g);
     }
 
