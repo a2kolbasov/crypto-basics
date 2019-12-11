@@ -75,6 +75,7 @@ public class Client {
         BigInteger S = (B.subtract(k.multiply(g.modPow(x, N)))).modPow(a.add(u.multiply(x)), N);
         // K = H(S)
         K = Hash.hash(S.toByteArray());
+        System.err.println("Key: " + K);
     }
 
     public BigInteger gen_M() {

@@ -70,6 +70,7 @@ public class Server {
         BigInteger S = A.multiply(v.modPow(u, N)).modPow(b, N);
         // K = H(S)
         K = Hash.hash(S.toByteArray());
+        System.err.println("Key: " + K);
     }
 
     public BigInteger test_M(BigInteger M_C) {
