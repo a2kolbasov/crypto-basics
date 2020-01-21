@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileReader {
-    public static String readAll(String fileName) throws IOException {
+    public static String read(String fileName) throws IOException {
         return Files.readString(Paths.get(fileName));
     }
 }
