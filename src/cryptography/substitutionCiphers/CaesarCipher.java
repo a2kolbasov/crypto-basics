@@ -1,8 +1,8 @@
-package cryptography.substitutionCiphers;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+package cryptography.substitutionCiphers;
 
 public class CaesarCipher {
     private final int shift;
@@ -14,18 +14,21 @@ public class CaesarCipher {
     }
 
     private char getShiftedChar(char shiftingChar, int shift){
-        int charIndex = this.alphabet.indexOf(shiftingChar);
-
         // TODO : А не вернуться ли к Map<Char, Int> ?
+        int charIndex = alphabet.indexOf(shiftingChar);
+
         // Если символа нет в алфавите, то не сдвигать
         if (charIndex == -1)
             return shiftingChar;
 
-        return this.alphabet.charAt(
-                (charIndex + shift +
-                        this.alphabet.length() // На случай отрицательного сдвига
-                ) % this.alphabet.length()
-        );
+        int resultIndex =
+                (charIndex +
+                        // Может быть < 0 (особености Java), приходится прибавлять модуль
+                        (shift % alphabet.length()) + alphabet.length()
+                ) % alphabet.length();
+
+        assert resultIndex > -1;
+        return alphabet.charAt(resultIndex);
     }
 
     private String encrypt(int shift, String message){
