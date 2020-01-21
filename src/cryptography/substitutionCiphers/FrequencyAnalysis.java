@@ -1,12 +1,12 @@
 package cryptography.substitutionCiphers;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+// Можно добавить поиск наименьшей разности
 
 public class FrequencyAnalysis {
     private final HashSet<Character> alphabet = new HashSet<>();
@@ -16,7 +16,7 @@ public class FrequencyAnalysis {
             this.alphabet.add(character);
     }
 
-    public Map<String, Integer> toFrequencyMap(String text, int gramSize){
+    public LinkedList<String> toFrequencyMap(String text, int gramSize){
         Map<String, Integer> frequency = new HashMap<>();
 
         if (gramSize < 1)
@@ -32,7 +32,16 @@ public class FrequencyAnalysis {
             Integer sum = frequency.getOrDefault(gram, 0);
             frequency.put(gram, sum + 1);
         }
-        return frequency;
+
+        LinkedList<Map.Entry<String, Integer>> ll = new LinkedList<>(frequency.entrySet());
+        Collections.sort(ll,(x,y) -> y.getValue().compareTo(x.getValue()));
+
+        System.out.println(ll);
+
+        LinkedList<String> l = new LinkedList<>();
+        for (Map.Entry<String, Integer> e : ll)
+            l.add(e.getKey());
+        return l;
     }
 
     private boolean containsInAlphabet(String gram){
