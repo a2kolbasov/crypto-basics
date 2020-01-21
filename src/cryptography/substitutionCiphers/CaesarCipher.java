@@ -16,6 +16,7 @@ public class CaesarCipher {
     private char getShiftedChar(char shiftingChar, int shift){
         int charIndex = this.alphabet.indexOf(shiftingChar);
 
+        // TODO : А не вернуться ли к Map<Char, Int> ?
         // Если символа нет в алфавите, то не сдвигать
         if (charIndex == -1)
             return shiftingChar;
