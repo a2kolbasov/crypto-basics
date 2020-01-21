@@ -27,10 +27,10 @@ public class RSA {
                         .multiply(
                                 pg.g.subtract(BigInteger.ONE));
 
-        // public exponent. 1 < e < fi && coprime with fi
+        // Public exponent, 1 < e < fi && coprime with fi
         // может быть фиксированной <https://tools.ietf.org/html/rfc2313>, <https://www.ietf.org/rfc/rfc4871.txt>
         BigInteger e = BigInteger.valueOf(65537); // TODO : а если не взаимопростое ?
-//        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nнод (== 1): %s",e,fi,НОД(e,fi));
+//        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nНОД (== 1): %s",e,fi,НОД(e,fi));
 
         // TODO : алгоритм поиска d
         // d * e (mod fi) == 1  <==>  d мультипликативно обратно e (mod fi)
