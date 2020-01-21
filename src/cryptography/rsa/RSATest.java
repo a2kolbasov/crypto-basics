@@ -1,22 +1,22 @@
-package cryptography.rsa;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
+
+package cryptography.rsa;
 
 import cryptography.DiffieHellman.DiffieHellman;
 
 public class RSATest {
     public static void main(String[] args) {
-        RSA rsa = new RSA();
+//        RSA rsa = new RSA();
 
         String message = "Привет, как дела? ☑\n\uD83D\uDD10Нормально!";
-//        while (true) {
+//        while (true) { // fixme
 //            RSA.Key key = rsa.genKey(DiffieHellman.genPG());
 //        }
 
         RSA.Key key = RSA.genKey(DiffieHellman.genPG());
-        String encrypted = rsa.encrypt(message, key);
+        String encrypted = RSA.encrypt(message, key);
 
         System.out.println(
                 "encrypted:\n" +
@@ -25,7 +25,7 @@ public class RSATest {
 
         System.out.println(
                 "decrypted:\n" +
-                        rsa.decrypt(encrypted, key)
+                        RSA.decrypt(encrypted, key)
         );
     }
 }

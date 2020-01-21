@@ -1,11 +1,18 @@
-package cryptography.utils.primesGenerator;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
 
+package cryptography.utils.primesGenerator;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashSet;
+/*
+Уязвимость в заранее заданных числах <https://habr.com/ru/post/312634/>
+<https://habr.com/ru/post/356870/>
+<https://habr.com/ru/post/100950/>
+<https://habr.com/ru/post/412779/>
+ */
 
 public class PrimesGenerator {
     public static long getRandomPrime(){
@@ -25,9 +32,7 @@ public class PrimesGenerator {
 
     public static BigInteger getBigPrime(){
         // TODO: регулировка длинны (младший и старший биты)
-        BigInteger prime =
-                new BigInteger(20, new SecureRandom())
-                        .nextProbablePrime();
-        return prime;
+        return new BigInteger(10, new SecureRandom()) // 50
+                .nextProbablePrime();
     }
 }

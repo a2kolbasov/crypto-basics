@@ -1,13 +1,12 @@
-package cryptography.DiffieHellman;
-
 /*
  * Copyright © 2019 Alexander Kolbasov
  */
 
+package cryptography.DiffieHellman;
+
 import cryptography.utils.primesGenerator.PrimesGenerator;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
 
 public class DiffieHellman {
     private BigInteger a, A, K;
@@ -25,7 +24,6 @@ public class DiffieHellman {
         BigInteger p, g;
         // TODO : (p-1)/2 должно быть случайным простым числом (Safe prime)
         p = PrimesGenerator.getBigPrime();
-        // Временно
         // TODO : Проверка, что g -- первообразный корень
         do {
             g = PrimesGenerator.getBigPrime();
@@ -57,11 +55,6 @@ public class DiffieHellman {
         K = B.modPow(a, p);
         return K;
     }
-
-//    boolean isPrimitiveRoot(BigInteger number, BigInteger modulo){
-//        // TODO
-//        throw new RuntimeException();
-//    }
 
     private BigInteger gen_a(){
         // TODO : случайное натуральное число
