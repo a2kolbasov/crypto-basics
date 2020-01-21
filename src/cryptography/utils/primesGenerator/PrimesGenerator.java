@@ -18,13 +18,12 @@ public class PrimesGenerator {
     public static long getRandomPrime(){
         SecureRandom secureRandom = new SecureRandom();
         long randomLong = secureRandom.nextLong();
-        // randomLong % 2 != 0
+        // Простое число не кратно 2 ==> младший бит = 1
         randomLong |= 0b1;
         do {
-            // TODO : SafePrime (p = 2 * q + 1)
             if (PrimalityTest.isProbablePrime(randomLong, 5))
                 return randomLong;
-            // randomLong % 2 != 0 ==> +2
+            // Не кратно 2
             randomLong += 2;
         } while (true);
     }
@@ -32,10 +31,11 @@ public class PrimesGenerator {
 
     public static BigInteger getBigPrime(){
         // TODO: регулировка длинны (младший и старший биты)
-        return new BigInteger(10, new SecureRandom()) // 50
+        return new BigInteger(15, new SecureRandom()) // Безопаснее от 50, но медленно
                 .nextProbablePrime();
     }
 
+    // (safe_prime - 1) / 2 должно быть случайным простым числом
     public static BigInteger getSafePrime() {
         BigInteger prime = getBigPrime(), safePrime;
         do {
@@ -45,5 +45,24 @@ public class PrimesGenerator {
             else
                 prime = prime.nextProbablePrime();
         } while (true);
+    }
+
+    public static BigInteger getFirstPrimitiveRoot(final BigInteger mod) {
+        BigInteger root = BigInteger.TWO;
+        while (! isPrimitiveRoot(root, mod))
+            root = root.add(BigInteger.ONE);
+        return root;
+    }
+
+    private static boolean isPrimitiveRoot(final BigInteger number, final BigInteger modulo) {
+        HashSet<BigInteger> set = new HashSet<>();
+        // while (pow < modulo)
+        for (BigInteger pow = BigInteger.ONE; pow.compareTo(modulo) < 0; pow = pow.add(BigInteger.ONE)) {
+            BigInteger remainder = number.modPow(pow, modulo);
+            if (set.contains(remainder))
+                return false;
+            set.add(remainder);
+        }
+        return true;
     }
 }
