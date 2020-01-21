@@ -35,4 +35,15 @@ public class PrimesGenerator {
         return new BigInteger(10, new SecureRandom()) // 50
                 .nextProbablePrime();
     }
+
+    public static BigInteger getSafePrime() {
+        BigInteger prime = getBigPrime(), safePrime;
+        do {
+            safePrime = prime.multiply(BigInteger.TWO).add(BigInteger.ONE);
+            if (safePrime.isProbablePrime(5))
+                return safePrime;
+            else
+                prime = prime.nextProbablePrime();
+        } while (true);
+    }
 }
