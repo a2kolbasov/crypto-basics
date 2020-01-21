@@ -23,7 +23,7 @@ public class DiffieHellman {
 
     public static PG genPG(){
         BigInteger p, g;
-        // TODO : (p-1)/2 должно быть случайным простым числом
+        // TODO : (p-1)/2 должно быть случайным простым числом (Safe prime)
         p = PrimesGenerator.getBigPrime();
         // Временно
         // TODO : Проверка, что g -- первообразный корень

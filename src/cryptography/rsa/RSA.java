@@ -17,34 +17,56 @@ RSA для встраиваемых систем (про длинную ариф
 */
 
 public class RSA {
-    Key genKey(DiffieHellman.PG pg){
+    static Key genKey(DiffieHellman.PG pg){
+        // n = p * q
         BigInteger n = pg.p.multiply(pg.g);
+        // fi = (p - 1) * (q - 1)
         BigInteger fi =
                 pg.p.subtract(BigInteger.ONE)
                         .multiply(
                                 pg.g.subtract(BigInteger.ONE)
                         );
-        // 'e' может быть фиксированной <https://tools.ietf.org/html/rfc2313>, <https://www.ietf.org/rfc/rfc4871.txt>
-        BigInteger e = BigInteger.valueOf(65537);
-        // TODO : поиск d
-        BigInteger d =
-                BigInteger.ONE.divide(e).mod(fi);
-        //e.pow(-1).mod(fi); // Negative exponent
-        System.out.println("d: " + d);
+
+        // public exponent. 1 < e < fi && coprime with fi
+        // может быть фиксированной <https://tools.ietf.org/html/rfc2313>, <https://www.ietf.org/rfc/rfc4871.txt>
+        BigInteger e = BigInteger.valueOf(65537); // TODO : а если не взаимопростое ?
+        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nнод (== 1): %s",e,fi,НОД(e,fi));
+
+        // TODO : свой алгоритм поиска d
+        // d * e (mod fi) == 1  <==>  d мультипликативно обратно e (mod fi)
+        BigInteger d = e.modInverse(fi);
+        assert d.multiply(e).mod(fi).compareTo(BigInteger.ONE) == 0;
 
         return new Key(e, n, d);
     }
 
-    BigInteger encrypt(String message, Key key){
-        BigInteger[] arr = new BigInteger[message.length()];
-        BigInteger bi = new BigInteger(message.getBytes());
-        System.out.println(bi);
-        BigInteger encrypted = bi.modPow(key.d, key.n);
-        return encrypted;
-        //return null;
+    static BigInteger НОД(BigInteger a, BigInteger b) {
+        // A > B needed
+        if (a.compareTo(b) < 0)
+            return НОД(b, a);
+
+        //System.out.printf("A: %s, B: %s\n", a, b);
+        if (b.compareTo(BigInteger.ZERO) == 0)
+            return a;
+        BigInteger mod = a.mod(b);
+        return НОД(b, mod);
     }
 
-    String decrypt(BigInteger encrypted, Key key){
+    static BigInteger encrypt(String message, Key key){
+        BigInteger[] arr = new BigInteger[message.length()];
+
+        for (Character ch : message.toCharArray()){
+            // TODO
+        }
+        throw new RuntimeException("Нужно доделать!");
+
+//        BigInteger bi = new BigInteger(message.getBytes());
+//        System.out.println("bi: " + bi);
+//        BigInteger encrypted = bi.modPow(key.e, key.n);
+//        return encrypted;
+    }
+
+    static String decrypt(BigInteger encrypted, Key key){
         BigInteger decrypted = encrypted.modPow(key.d, key.n);
         return new String(decrypted.toByteArray());
     }
