@@ -7,6 +7,7 @@ package cryptography.DiffieHellman;
 import cryptography.utils.primesGenerator.PrimesGenerator;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
 public class DiffieHellman {
     public static class PG{
@@ -19,19 +20,19 @@ public class DiffieHellman {
     }
 
     // TODO : BigInteger
-    private BigInteger p,g,a, A, K;
+    private BigInteger p,g, a, A, K;
 
     public BigInteger initAndGet_A(PG pg){
         p = pg.p;
         g = pg.g;
 
         a = gen_a();
-        System.out.println("p " + p + " g " + g + " a " + a);
+        System.out.printf("p: %s, g: %s, a: %s\n", p, g, a);
 
         // A = g^a mod p
         A = g.modPow(a, p);
         //A = ((long) Math.pow(g, a)) % p;
-        System.out.println(" A = " + A);
+        //System.out.println(" A = " + A);
         return A;
     }
 
@@ -39,11 +40,12 @@ public class DiffieHellman {
         // K = B^a mod p
         // K = ((long) Math.pow(B, a)) % p;
         K = B.modPow(a, p);
-        System.out.println("K = " + K);
+        //System.out.println("K = " + K);
         return K;
     }
 
-    public PG genPG(){
+    public static PG genPG(){
+        BigInteger p,g;
         p = PrimesGenerator.getBigPrime();
         // Временно
         do {
