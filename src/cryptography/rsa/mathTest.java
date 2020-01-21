@@ -12,35 +12,22 @@ public class mathTest {
     public static void main(String[] args) {
 //        BigInteger нод = RSA.НОД(BigInteger.valueOf(462), BigInteger.valueOf(1071));
 //        System.out.println(нод);
+        BigInteger a,b,c;
+        a = BigInteger.valueOf(7);
 
-        BigInteger b;
-        BigInteger e = BigInteger.valueOf(65537);
-        RSA.Key key = RSA.genKey(DiffieHellman.genPG());
-        String m = "💰";
-        StringBuilder sb = new StringBuilder();
+        b= BigInteger.valueOf(10);
 
-        for (char c : m.toCharArray()){
-            b = BigInteger.valueOf(c);
-            BigInteger encrypted = b.modPow(key.e, key.n);
-            BigInteger decrypted = encrypted.modPow(key.d, key.n);
-            System.out.printf("char: %c (%d), encrypted: %s, decrypted: %s\n", c, (int) c, encrypted, decrypted);
-            sb.append(encrypted.toString(16));
-            sb.append(' ');
-        }
-        System.out.println("sb :" + sb);
+        c = a.modInverse(b);
+        System.out.println(
+                c
+        );
 
-        String[] sa = sb.toString().split(" ");
-        sb = new StringBuilder();
-        for (String s :sa){
-            System.out.println("next string :" + s);
-            BigInteger decrypted = new BigInteger(s, 16);
-            System.out.println("encrypted: " + decrypted);
-            decrypted = decrypted.modPow(key.d, key.n);
-            System.out.println("decrypted: " + decrypted);
-            sb.append(
-                    (char) decrypted.intValueExact()
-            );
-        }
-        System.out.println("Итог: " + sb);
+        int q,w,e;
+
+        q = 3; w = 10;
+        System.out.println(RSA.НОД(a, b));
     }
 }
+// TODO : Вопрос по модульной арифметике, **(-1), расширенный алгоритм Евклида
+// https://ru.wikipedia.org/wiki/%D0%A1%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8E
+// -> Решение сравнений
