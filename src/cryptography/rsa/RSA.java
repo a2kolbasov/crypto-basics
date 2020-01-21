@@ -7,6 +7,7 @@ package cryptography.rsa;
 import cryptography.DiffieHellman.DiffieHellman;
 
 import java.math.BigInteger;
+import java.util.Base64;
 
 /*
 <https://habr.com/ru/post/119637/>
@@ -24,8 +25,7 @@ public class RSA {
         BigInteger fi =
                 pg.p.subtract(BigInteger.ONE)
                         .multiply(
-                                pg.g.subtract(BigInteger.ONE)
-                        );
+                                pg.g.subtract(BigInteger.ONE));
 
         // public exponent. 1 < e < fi && coprime with fi
         // может быть фиксированной <https://tools.ietf.org/html/rfc2313>, <https://www.ietf.org/rfc/rfc4871.txt>
@@ -52,23 +52,32 @@ public class RSA {
         return НОД(b, mod);
     }
 
-    static BigInteger encrypt(String message, Key key){
-        BigInteger[] arr = new BigInteger[message.length()];
+    String encrypt(String message, Key key){
+        Base64.Encoder encoder = Base64.getMimeEncoder();
+        StringBuilder encrypted = new StringBuilder();
 
-        for (Character ch : message.toCharArray()){
-            // TODO
+        for (char c : message.toCharArray()){
+            BigInteger cNum = BigInteger.valueOf(c);
+            encrypted.append(
+                    encoder.encodeToString(
+                            cNum.modPow(key.e, key.n)
+                                    .toByteArray()));
+            encrypted.append("\n");
         }
-        throw new RuntimeException("Нужно доделать!");
-
-//        BigInteger bi = new BigInteger(message.getBytes());
-//        System.out.println("bi: " + bi);
-//        BigInteger encrypted = bi.modPow(key.e, key.n);
-//        return encrypted;
+        return encrypted.toString();
     }
 
-    static String decrypt(BigInteger encrypted, Key key){
-        BigInteger decrypted = encrypted.modPow(key.d, key.n);
-        return new String(decrypted.toByteArray());
+    static String decrypt(String encryptedMessage, Key key){
+        Base64.Decoder decoder = Base64.getMimeDecoder();
+        StringBuilder decrypted = new StringBuilder();
+
+        String[] messages = encryptedMessage.split("\n");
+        for (String message : messages){
+            decrypted.append((char)
+                    new BigInteger(decoder.decode(message)).modPow(key.d, key.n).intValue()
+            );
+        }
+        return decrypted.toString();
     }
 
     public static class Key{
