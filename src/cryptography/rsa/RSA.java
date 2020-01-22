@@ -3,7 +3,7 @@
  */
 
 package cryptography.rsa;
-
+// Используется из-за одинакового кода
 import cryptography.DiffieHellman.DiffieHellman;
 
 import java.math.BigInteger;
@@ -18,7 +18,8 @@ RSA для встраиваемых систем (про длинную ариф
 */
 
 public class RSA {
-    static Key genKey(DiffieHellman.PG pg){
+
+    public static PrivateKey genPrivateKey(DiffieHellman.PG pg){
         // n = p * q
         BigInteger n = pg.p.multiply(pg.g);
         // fi = (p - 1) * (q - 1)
@@ -29,30 +30,16 @@ public class RSA {
 
         // Public exponent, 1 < e < fi && coprime with fi
         // может быть фиксированной <https://tools.ietf.org/html/rfc2313>, <https://www.ietf.org/rfc/rfc4871.txt>
-        BigInteger e = BigInteger.valueOf(65537); // TODO : а если не взаимопростое ?
-//        assert НОД(e, fi).compareTo(BigInteger.ONE) == 0 : String.format("\ne: %s\nfi: %s\nНОД (== 1): %s",e,fi,НОД(e,fi));
+        BigInteger e = BigInteger.valueOf(65537);
 
-        // TODO : алгоритм поиска d
         // d * e (mod fi) == 1  <==>  d мультипликативно обратно e (mod fi)
         BigInteger d = e.modInverse(fi);
         assert d.multiply(e).mod(fi).compareTo(BigInteger.ONE) == 0;
 
-        return new Key(e, n, d);
+        return new PrivateKey(e, n, d);
     }
 
-//    static BigInteger НОД(BigInteger a, BigInteger b) {
-//        // A > B needed
-//        if (a.compareTo(b) < 0)
-//            return НОД(b, a);
-//
-//        //System.out.printf("A: %s, B: %s\n", a, b);
-//        if (b.compareTo(BigInteger.ZERO) == 0)
-//            return a;
-//        BigInteger mod = a.mod(b);
-//        return НОД(b, mod);
-//    }
-
-    static String encrypt(String message, Key key){
+    static String encrypt(String message, PublicKey key){
         Base64.Encoder encoder = Base64.getMimeEncoder();
         StringBuilder encrypted = new StringBuilder();
 
@@ -67,7 +54,7 @@ public class RSA {
         return encrypted.toString();
     }
 
-    static String decrypt(String encryptedMessage, Key key){
+    static String decrypt(String encryptedMessage, PrivateKey key){
         Base64.Decoder decoder = Base64.getMimeDecoder();
         StringBuilder decrypted = new StringBuilder();
 
@@ -80,13 +67,34 @@ public class RSA {
         return decrypted.toString();
     }
 
-    public static class Key{
-        public BigInteger e, n, d;
+    public static class PublicKey {
+        public final BigInteger e, n;
+        /**
+         * Data class для открытого ключа
+         * @param e открытая экспонента
+         * @param n модуль (n = p * q)
+         */
+        public PublicKey(BigInteger e, BigInteger n) {
+            this.e = e;
+            this.n = n;
+        }
+    }
 
-        public Key(BigInteger e, BigInteger n, BigInteger d) {
+    public static class PrivateKey {
+        public final BigInteger e, n, d;
+        /**
+         * Data class для закрытого ключа
+         * @param d секретная экспонента
+         * @param e открытая экспонента
+         * @param n модуль (n = p * q)
+         */
+        public PrivateKey(BigInteger e, BigInteger n, BigInteger d) {
             this.e = e;
             this.n = n;
             this.d = d;
+        }
+        public PublicKey getPublicKey() {
+            return new PublicKey(e, n);
         }
     }
 }

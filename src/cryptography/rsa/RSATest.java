@@ -15,8 +15,8 @@ public class RSATest {
 //            RSA.Key key = rsa.genKey(DiffieHellman.genPG());
 //        }
 
-        RSA.Key key = RSA.genKey(DiffieHellman.genPG());
-        String encrypted = RSA.encrypt(message, key);
+        RSA.PrivateKey key = RSA.genPrivateKey(DiffieHellman.genPG());
+        String encrypted = RSA.encrypt(message, key.getPublicKey());
 
         System.out.println(
                 "encrypted:\n" +
