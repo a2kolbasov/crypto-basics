@@ -8,57 +8,89 @@ import cryptography.utils.primesGenerator.PrimesGenerator;
 
 import java.math.BigInteger;
 
+/**
+ * Реализация протокола Диффи - Хеллмана для согласования секретного ключа.
+ *
+ *  Одна из сторон генерирует открытые параметры 'p' и 'g' и передаёт их другой стороне.
+ *  Каждая из сторон генерирует секретный ключ, открытый ключ (через 'p', 'g'),
+ * посылает другой стороне свой открытый ключ. На основе открытого ключа собеседника и ('p','g')
+ * вычисляется общий секретный ключ.
+ */
 public class DiffieHellman {
-    private BigInteger a, A, K;
-    private final BigInteger p, g;
 
+    private BigInteger privateKey, publicKey, sharedKey;
+    // открытые параметры
+//    private final BigInteger p, g;
+    private final PG pg;
+
+    /**
+     * Data class для храненеия открытых параметров 'p' и 'g'
+     * {@code p} - открытое простое число
+     * {@code g} - первообразный корень (mod p)
+     */
     public static class PG{
-        public BigInteger p, g;
+        public final BigInteger p, g;
         public PG(BigInteger p, BigInteger g) {
             this.p = p;
             this.g = g;
         }
     }
 
+    /**
+     * Генерация открытых параметров 'p' и 'g' для совместного использования со второй стороной
+     * @return объёкт класса {@code PG} с заполненными параметрами {@code p} и {@code g}
+     */
     public static PG genPG(){
-        BigInteger p, g;
+        final BigInteger p, g;
         p = PrimesGenerator.getRandomSafePrime();
         g = PrimesGenerator.getFirstPrimitiveRoot(p);
         return new PG(p, g);
     }
 
-    public DiffieHellman(BigInteger p, BigInteger g) {
-        this.p = p;
-        this.g = g;
-    }
+    /**
+     * Реализация протокола Диффи - Хеллмана
+     * @see #genPG()
+     */
     public DiffieHellman(PG pg){
-        this.p = pg.p;
-        this.g = pg.g;
+//        this.p = pg.p;
+//        this.g = pg.g;
+        this.pg = pg;
     }
 
-    public BigInteger calculate_A(){
-        // TODO : в конструктор или двойное вычисление
-        a = gen_a();
+    /**
+     * Генерирует публичный ключ для передачи второй стороне
+     * @return публичный ключ
+     */
+    public BigInteger genPublicKey(){
+        privateKey = genPrivateKey();
         // A = g^a mod p
-        A = g.modPow(a, p);
-        return A;
+        publicKey = pg.g.modPow(privateKey, pg.p);
+        return publicKey;
     }
 
-    public BigInteger calculate_K(BigInteger B){
-        if (K != null)
-            return K;
+    /**
+     * Генерирует общий секретный ключ, одинаковый у обоих пользователей
+     * @param anotherUserPublicKey публичный ключ другого пользователя
+     * @return общий секретный ключ
+     */
+    public BigInteger genSharedSecretKey(BigInteger anotherUserPublicKey){
         // K = B^a mod p
-        K = B.modPow(a, p);
-        return K;
+        sharedKey = anotherUserPublicKey.modPow(privateKey, pg.p);
+        return sharedKey;
     }
 
-    private BigInteger gen_a(){
+    private BigInteger genPrivateKey(){
         // TODO : случайное натуральное число
         return PrimesGenerator.getRandomPrime();
     }
 
+    public PG getPG() {
+        return pg;
+    }
+
     @Override
     public String toString(){
-        return String.format("p: %s, g: %s, A: %s, K: %s", p, g, A, K);
+        return String.format("[p: %s, g: %s], a: %s, A: %s, K: %s",
+                pg.p, pg.g, privateKey, publicKey, sharedKey);
     }
 }

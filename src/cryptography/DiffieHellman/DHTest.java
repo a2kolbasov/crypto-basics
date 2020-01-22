@@ -13,12 +13,12 @@ public class DHTest {
 
         DiffieHellman.PG pg = DiffieHellman.genPG();
         dhA = new DiffieHellman(pg);
-        A = dhA.calculate_A();
+        A = dhA.genPublicKey();
         dhB = new DiffieHellman(pg);
-        B = dhB.calculate_A();
+        B = dhB.genPublicKey();
 
-        K1 = dhA.calculate_K(B);
-        K2 = dhB.calculate_K(A);
+        K1 = dhA.genSharedSecretKey(B);
+        K2 = dhB.genSharedSecretKey(A);
 
         System.out.printf("dhA: %s\ndhB: %s\nK1 == K2: %b", dhA, dhB, K1.compareTo(K2) == 0);
     }
