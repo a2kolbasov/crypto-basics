@@ -22,12 +22,10 @@ public class CaesarCipher {
             return shiftingChar;
 
         int resultIndex =
-                (charIndex +
-                        // Может быть < 0 (особености Java), приходится прибавлять модуль
-                        (shift % alphabet.length()) + alphabet.length()
-                ) % alphabet.length();
+                (charIndex + shift) % alphabet.length();
+        if (resultIndex < 0)
+            resultIndex += alphabet.length();
 
-        assert resultIndex > -1;
         return alphabet.charAt(resultIndex);
     }
 
