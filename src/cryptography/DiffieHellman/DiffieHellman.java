@@ -22,7 +22,7 @@ public class DiffieHellman {
 
     public static PG genPG(){
         BigInteger p, g;
-        p = PrimesGenerator.getSafePrime();
+        p = PrimesGenerator.getRandomSafePrime();
         g = PrimesGenerator.getFirstPrimitiveRoot(p);
         return new PG(p, g);
     }
@@ -54,7 +54,7 @@ public class DiffieHellman {
 
     private BigInteger gen_a(){
         // TODO : случайное натуральное число
-        return PrimesGenerator.getBigPrime();
+        return PrimesGenerator.getRandomPrime();
     }
 
     @Override

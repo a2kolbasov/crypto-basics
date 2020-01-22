@@ -15,29 +15,15 @@ import java.util.HashSet;
  */
 
 public class PrimesGenerator {
-    public static long getRandomPrime(){
-        SecureRandom secureRandom = new SecureRandom();
-        long randomLong = secureRandom.nextLong();
-        // Простое число не кратно 2 ==> младший бит = 1
-        randomLong |= 0b1;
-        do {
-            if (PrimalityTest.isProbablePrime(randomLong, 5))
-                return randomLong;
-            // Не кратно 2
-            randomLong += 2;
-        } while (true);
-    }
-
-
-    public static BigInteger getBigPrime(){
+    public static BigInteger getRandomPrime(){
         // TODO: регулировка длинны (младший и старший биты)
         return new BigInteger(15, new SecureRandom()) // Безопаснее от 50, но медленно
                 .nextProbablePrime();
     }
 
     // (safe_prime - 1) / 2 должно быть случайным простым числом
-    public static BigInteger getSafePrime() {
-        BigInteger prime = getBigPrime(), safePrime;
+    public static BigInteger getRandomSafePrime() {
+        BigInteger prime = getRandomPrime(), safePrime;
         do {
             safePrime = prime.multiply(BigInteger.TWO).add(BigInteger.ONE);
             if (safePrime.isProbablePrime(5))

@@ -11,9 +11,4 @@ public class PrimalityTest{
         // TODO : Реализовать алгоритм
         return number.isProbablePrime(numberOfRounds);
     }
-
-    public static boolean isProbablePrime(long number, int numberOfRounds){
-        return isProbablePrime(
-                BigInteger.valueOf(number), numberOfRounds);
-    }
 }
