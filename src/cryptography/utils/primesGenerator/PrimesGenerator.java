@@ -5,7 +5,6 @@
 package cryptography.utils.primesGenerator;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.HashSet;
 /*
 Уязвимость в заранее заданных числах <https://habr.com/ru/post/312634/>
@@ -16,14 +15,15 @@ import java.util.HashSet;
 
 public class PrimesGenerator {
     public static BigInteger getRandomPrime(){
-        // TODO: регулировка длинны (младший и старший биты)
-        return new BigInteger(15, new SecureRandom()) // Безопаснее от 50, но медленно
+        return new BigInteger(15, SecRandom.getRandom()) // Безопаснее от 50, но медленно
                 .nextProbablePrime();
     }
 
     // (safe_prime - 1) / 2 должно быть случайным простым числом
     public static BigInteger getRandomSafePrime() {
-        BigInteger prime = getRandomPrime(), safePrime;
+        BigInteger
+                prime = getRandomPrime(),
+                safePrime;
         do {
             safePrime = prime.multiply(BigInteger.TWO).add(BigInteger.ONE);
             if (safePrime.isProbablePrime(5))
@@ -50,5 +50,19 @@ public class PrimesGenerator {
             set.add(remainder);
         }
         return true;
+    }
+
+    ////////////////////////////////
+    // Пример генерации
+    ////////////////////////////////
+    private static BigInteger yetOneRandomPrimeGenerator() {
+        BigInteger candidate = new BigInteger(15, SecRandom.getRandom());
+        // Простое число не кратно 2 ==> младший бит = 1
+        candidate = candidate.or(BigInteger.ONE);
+
+        while (! PrimalityTest.isProbablePrime(candidate, 5))
+            // Не кратно 2
+            candidate = candidate.add(BigInteger.TWO);
+        return candidate;
     }
 }
