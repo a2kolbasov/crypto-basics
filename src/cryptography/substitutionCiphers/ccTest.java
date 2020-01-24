@@ -21,16 +21,15 @@ public class ccTest {
         String decrypted = cc.decrypt(encryptedMessage);
 
         assert message.equals(decrypted);
-        System.out.println(encryptedMessage);
-        System.out.println(decrypted);
-
-        FrequencyAnalysis analysis = new FrequencyAnalysis(Alphabets.RUSSIAN);
+        System.out.println("Encrypted:\n" + encryptedMessage);
+        System.out.println("Decrypted:\n" + decrypted);
 
         /*
          * Частотный анализ
          */
+        FrequencyAnalysis analysis = new FrequencyAnalysis(Alphabets.RUSSIAN);
         String referenceText = FileReader.read("война_и_мир.txt");
-        System.out.println(
+        System.out.println("Frequency analysis:\n" +
                 analysis.decryptText(encryptedMessage, referenceText, 1)
         );
     }
