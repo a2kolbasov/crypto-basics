@@ -2,7 +2,9 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
-package cryptography.dh;
+package cryptography.tests;
+
+import cryptography.dh.DH;
 
 import java.math.BigInteger;
 

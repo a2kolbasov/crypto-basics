@@ -2,7 +2,9 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
-package cryptography.rsa;
+package cryptography.tests;
+
+import cryptography.rsa.*;
 
 public class RSATest {
     public static void main(String[] args) {

@@ -2,14 +2,16 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
-package cryptography.substitutionCiphers;
+package cryptography.tests;
 
+import cryptography.substitutionCiphers.CaesarCipher;
+import cryptography.substitutionCiphers.FrequencyAnalysis;
 import cryptography.utils.Alphabets;
 import cryptography.utils.FileReader;
 
 import java.io.IOException;
 
-public class ccTest {
+public class CaesarTest {
     public static void main(String[] args) throws IOException {
         /*
          * Проверка работы шифра Цезаря
