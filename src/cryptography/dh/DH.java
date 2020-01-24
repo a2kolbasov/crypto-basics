@@ -18,9 +18,8 @@ import java.math.BigInteger;
  */
 public class DH {
 
-    private BigInteger privateKey, publicKey, sharedKey;
+    private BigInteger privateKey;
     // открытые параметры
-//    private final BigInteger p, g;
     private final PG pg;
 
     /**
@@ -52,8 +51,6 @@ public class DH {
      * @see #genPG()
      */
     public DH(PG pg){
-//        this.p = pg.p;
-//        this.g = pg.g;
         this.pg = pg;
     }
 
@@ -64,8 +61,7 @@ public class DH {
     public BigInteger genPublicKey(){
         privateKey = genPrivateKey();
         // A = g^a mod p
-        publicKey = pg.g.modPow(privateKey, pg.p);
-        return publicKey;
+        return pg.g.modPow(privateKey, pg.p);
     }
 
     /**
@@ -75,22 +71,15 @@ public class DH {
      */
     public BigInteger genSharedSecretKey(BigInteger anotherUserPublicKey){
         // K = B^a mod p
-        sharedKey = anotherUserPublicKey.modPow(privateKey, pg.p);
-        return sharedKey;
+        return anotherUserPublicKey.modPow(privateKey, pg.p);
     }
 
     private BigInteger genPrivateKey(){
-        // TODO : случайное натуральное число
+        // Можно использовать случайное натуральное число, не обязательно простое
         return PrimesGenerator.getRandomPrime();
     }
 
     public PG getPG() {
         return pg;
-    }
-
-    @Override
-    public String toString(){
-        return String.format("[p: %s, g: %s], a: %s, A: %s, K: %s",
-                pg.p, pg.g, privateKey, publicKey, sharedKey);
     }
 }
