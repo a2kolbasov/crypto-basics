@@ -14,8 +14,12 @@ import java.util.HashSet;
  */
 
 public class PrimesGenerator {
+    private static final int
+            NUM_BITS = 16, // Безопаснее от 50, но медленно
+            ROUNDS = 5;
+
     public static BigInteger getRandomPrime(){
-        return new BigInteger(15, SecRandom.getRandom()) // Безопаснее от 50, но медленно
+        return new BigInteger(NUM_BITS, SecRandom.getRandom())
                 .nextProbablePrime();
     }
 
@@ -26,7 +30,7 @@ public class PrimesGenerator {
                 safePrime;
         do {
             safePrime = prime.multiply(BigInteger.TWO).add(BigInteger.ONE);
-            if (safePrime.isProbablePrime(5))
+            if (PrimalityTest.isProbablePrime(safePrime, ROUNDS))
                 return safePrime;
             else
                 prime = prime.nextProbablePrime();
@@ -56,11 +60,11 @@ public class PrimesGenerator {
     // Пример генерации
     ////////////////////////////////
     private static BigInteger yetOneRandomPrimeGenerator() {
-        BigInteger candidate = new BigInteger(15, SecRandom.getRandom());
+        BigInteger candidate = new BigInteger(NUM_BITS, SecRandom.getRandom());
         // Простое число не кратно 2 ==> младший бит = 1
         candidate = candidate.or(BigInteger.ONE);
 
-        while (! PrimalityTest.isProbablePrime(candidate, 5))
+        while (! PrimalityTest.isProbablePrime(candidate, ROUNDS))
             // Не кратно 2
             candidate = candidate.add(BigInteger.TWO);
         return candidate;
