@@ -2,19 +2,19 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
-package cryptography.DiffieHellman;
+package cryptography.dh;
 
 import java.math.BigInteger;
 
 public class DHTest {
     public static void main(String[] args) {
-        DiffieHellman dhA, dhB;
+        DH dhA, dhB;
         BigInteger A, B, K1, K2;
 
-        DiffieHellman.PG pg = DiffieHellman.genPG();
-        dhA = new DiffieHellman(pg);
+        DH.PG pg = DH.genPG();
+        dhA = new DH(pg);
         A = dhA.genPublicKey();
-        dhB = new DiffieHellman(pg);
+        dhB = new DH(pg);
         B = dhB.genPublicKey();
 
         K1 = dhA.genSharedSecretKey(B);

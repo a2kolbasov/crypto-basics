@@ -2,7 +2,7 @@
  * Copyright © 2019 Alexander Kolbasov
  */
 
-package cryptography.DiffieHellman;
+package cryptography.dh;
 
 import cryptography.utils.primesGenerator.PrimesGenerator;
 
@@ -16,7 +16,7 @@ import java.math.BigInteger;
  * посылает другой стороне свой открытый ключ. На основе открытого ключа собеседника и ('p','g')
  * вычисляется общий секретный ключ.
  */
-public class DiffieHellman {
+public class DH {
 
     private BigInteger privateKey, publicKey, sharedKey;
     // открытые параметры
@@ -51,7 +51,7 @@ public class DiffieHellman {
      * Реализация протокола Диффи - Хеллмана
      * @see #genPG()
      */
-    public DiffieHellman(PG pg){
+    public DH(PG pg){
 //        this.p = pg.p;
 //        this.g = pg.g;
         this.pg = pg;

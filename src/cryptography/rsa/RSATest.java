@@ -4,7 +4,7 @@
 
 package cryptography.rsa;
 
-import cryptography.DiffieHellman.DiffieHellman;
+import cryptography.dh.DH;
 
 public class RSATest {
     public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class RSATest {
 //            RSA.Key key = rsa.genKey(DiffieHellman.genPG());
 //        }
 
-        RSA.PrivateKey key = RSA.genPrivateKey(DiffieHellman.genPG());
+        RSA.PrivateKey key = RSA.genPrivateKey(DH.genPG());
         String encrypted = RSA.encrypt(message, key.getPublicKey());
 
         System.out.println(

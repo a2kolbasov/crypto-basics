@@ -4,7 +4,7 @@
 
 package cryptography.rsa;
 // Используется из-за одинакового кода
-import cryptography.DiffieHellman.DiffieHellman;
+import cryptography.dh.DH;
 
 import java.math.BigInteger;
 import java.util.Base64;
@@ -19,7 +19,7 @@ RSA для встраиваемых систем (про длинную ариф
 
 public class RSA {
 
-    public static PrivateKey genPrivateKey(DiffieHellman.PG pg){
+    public static PrivateKey genPrivateKey(DH.PG pg){
         // n = p * q
         BigInteger n = pg.p.multiply(pg.g);
         // fi = (p - 1) * (q - 1)
