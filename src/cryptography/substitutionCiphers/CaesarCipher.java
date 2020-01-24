@@ -4,18 +4,24 @@
 
 package cryptography.substitutionCiphers;
 
+import java.util.HashMap;
+
 public class CaesarCipher {
     private final int shift;
     private final String alphabet;
+    // Используется для быстрого поиска позиции символа в алфавите
+    private final HashMap<Character, Integer> alphabetMap = new HashMap<>();
 
     public CaesarCipher(String alphabet, int shift){
         this.alphabet = alphabet;
         this.shift = shift;
+
+        for (int i = 0; i< alphabet.length(); i++)
+            this.alphabetMap.put(alphabet.charAt(i), i);
     }
 
     private char getShiftedChar(char shiftingChar, int shift){
-        // TODO : А не вернуться ли к Map<Char, Int> ?
-        int charIndex = alphabet.indexOf(shiftingChar);
+        int charIndex = alphabetMap.getOrDefault(shiftingChar, -1);
 
         // Если символа нет в алфавите, то не сдвигать
         if (charIndex == -1)
@@ -26,10 +32,11 @@ public class CaesarCipher {
         if (resultIndex < 0)
             resultIndex += alphabet.length();
 
+//        assert resultIndex == Math.floorMod(charIndex + shift, alphabet.length());
         return alphabet.charAt(resultIndex);
     }
 
-    private String encrypt(int shift, String message){
+    private String encrypt(final String message, int shift){
         final char[] encryptedMessage = new char[message.length()];
         char character, shiftedCharacter;
 
@@ -47,10 +54,10 @@ public class CaesarCipher {
     }
 
     public String encrypt(String message){
-        return encrypt(this.shift, message);
+        return encrypt(message, shift);
     }
 
     public String decrypt(String encryptedMessage){
-        return encrypt(this.shift * -1, encryptedMessage);
+        return encrypt(encryptedMessage, shift * -1);
     }
 }
