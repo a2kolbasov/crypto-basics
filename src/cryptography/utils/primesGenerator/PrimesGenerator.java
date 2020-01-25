@@ -39,7 +39,8 @@ public class PrimesGenerator {
 
     /**
      * Находит минимальный первообразный корень числа по модулю {@code mod}.
-     * @param mod модуль
+     * Используется упрощённый алгоритм, подходящий только для простых чисел.
+     * @param mod модуль (обязательно простое число!)
      * @return первообразный корень по модулю {@code mod}
      */
     public static BigInteger getFirstPrimitiveRoot(final BigInteger mod) {
@@ -50,13 +51,13 @@ public class PrimesGenerator {
     }
 
     private static boolean isPrimitiveRoot(final BigInteger root, final BigInteger modulo) {
-        HashSet<BigInteger> set = new HashSet<>();
+        // Функция Эйлера
+        final BigInteger fi = modulo.subtract(BigInteger.ONE);
         // while (pow < modulo)
         for (BigInteger pow = BigInteger.ONE; pow.compareTo(modulo) < 0; pow = pow.add(BigInteger.ONE)) {
             BigInteger remainder = root.modPow(pow, modulo);
-            if (set.contains(remainder))
+            if (remainder.equals(BigInteger.ONE) && !pow.equals(fi))
                 return false;
-            set.add(remainder);
         }
         return true;
     }
