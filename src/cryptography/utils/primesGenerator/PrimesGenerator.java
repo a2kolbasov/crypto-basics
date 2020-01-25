@@ -37,6 +37,11 @@ public class PrimesGenerator {
         } while (true);
     }
 
+    /**
+     * Находит минимальный первообразный корень числа по модулю {@code mod}.
+     * @param mod модуль
+     * @return первообразный корень по модулю {@code mod}
+     */
     public static BigInteger getFirstPrimitiveRoot(final BigInteger mod) {
         BigInteger root = BigInteger.TWO;
         while (! isPrimitiveRoot(root, mod))
@@ -44,11 +49,11 @@ public class PrimesGenerator {
         return root;
     }
 
-    private static boolean isPrimitiveRoot(final BigInteger number, final BigInteger modulo) {
+    private static boolean isPrimitiveRoot(final BigInteger root, final BigInteger modulo) {
         HashSet<BigInteger> set = new HashSet<>();
         // while (pow < modulo)
         for (BigInteger pow = BigInteger.ONE; pow.compareTo(modulo) < 0; pow = pow.add(BigInteger.ONE)) {
-            BigInteger remainder = number.modPow(pow, modulo);
+            BigInteger remainder = root.modPow(pow, modulo);
             if (set.contains(remainder))
                 return false;
             set.add(remainder);
