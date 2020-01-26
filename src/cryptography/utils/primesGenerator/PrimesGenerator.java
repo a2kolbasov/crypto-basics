@@ -5,7 +5,6 @@
 package cryptography.utils.primesGenerator;
 
 import java.math.BigInteger;
-import java.util.HashSet;
 /*
 Уязвимость в заранее заданных числах <https://habr.com/ru/post/312634/>
 <https://habr.com/ru/post/356870/>
@@ -15,7 +14,7 @@ import java.util.HashSet;
 
 public class PrimesGenerator {
     private static final int
-            NUM_BITS = 16, // Безопаснее от 50, но медленно
+            NUM_BITS = 25, // Безопаснее от 50, но медленно
             ROUNDS = 5;
 
     public static BigInteger getRandomPrime(){
@@ -45,7 +44,8 @@ public class PrimesGenerator {
      */
     public static BigInteger getFirstPrimitiveRoot(final BigInteger mod) {
         BigInteger root = BigInteger.TWO;
-        while (! isPrimitiveRoot(root, mod))
+        while (! PrimitiveRootSearcher.isPrimitiveRoot(root, mod))
+//        while (! isPrimitiveRoot(root, mod))
             root = root.add(BigInteger.ONE);
         return root;
     }
